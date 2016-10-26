@@ -6,14 +6,17 @@ import Control.Monad
 -- Contains the word, chosen letters, and number of wrong guesses.
 data State = State {word :: String, letters :: String, errors :: Int} deriving Show
 
+-- Dummy word as stand-in, for now.
 getWord :: String
 getWord = "equilibrium"
 
 initialState = State getWord [] 0
 
+-- Called by turn when a the input is a single letter.
 guessLetter :: Char -> State -> State
 guessLetter letter state = State (word state) (letter : (letters state)) (errors state)
 
+-- Called by turn when a the input is a word.
 guessWord :: String -> State -> State
 guessWord guess state = 
    if guess /= (word state)
@@ -23,6 +26,7 @@ guessWord guess state =
 main = do
    turn initialState
 
+-- Handles a single turn of the game, from one user input to the next.
 turn :: State -> IO ()
 turn st = do
    hSetBuffering stdout NoBuffering
