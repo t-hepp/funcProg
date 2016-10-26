@@ -14,7 +14,10 @@ initialState = State getWord [] 0
 
 -- Called by turn when a the input is a single letter.
 guessLetter :: Char -> State -> State
-guessLetter letter state = State (word state) (letter : (letters state)) (errors state)
+guessLetter letter state = 
+   if letter `elem` (letters state)
+      then State (word state) (letters state) (succ(errors state))
+      else State (word state) (letter : (letters state)) (errors state)
 
 -- Called by turn when a the input is a word.
 guessWord :: String -> State -> State
