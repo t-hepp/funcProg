@@ -28,6 +28,17 @@ guessWord guess state =
 
 main = do
    turn initialState
+   
+displayWord :: State -> IO ()
+displayWord state = putStrLn [replaceChar (w `elem` letters state) w | w <- word state]
+
+replaceChar :: Bool -> Char -> Char
+replaceChar bool char
+   | bool = char
+   | otherwise = '_'
+   
+test :: String -> String
+test xs = [succ x | x <- xs]
 
 -- Handles a single turn of the game, from one user input to the next.
 turn :: State -> IO ()
